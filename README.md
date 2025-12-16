@@ -18,13 +18,13 @@ Beide Arten von Constraints wurden im Rahmen des Projekts https://github.com/geo
 Der aktuellste 'Release' befindet sich jeweils auf https://dmav.ilicop.ch/ und kann über die Oberfläche von ilicop verwendet werden.
 
 ## Installation
-Unter Releases befinden sich die aktuellsten Lieferobjekte. Diese können für eine lokale Installation verwendet werden. Dazu müssen die Dateien heruntergeladen und in einem Verzeichnis mit Lese- und Schreibrechten entzippt werden.
+Unter [Releases](https://github.com/geowerkstatt/DMAV_ilivalidator/releases) befinden sich die aktuellsten Lieferobjekte. Diese können für eine lokale Installation verwendet werden. Dazu müssen die Dateien heruntergeladen und in einem Verzeichnis mit Lese- und Schreibrechten entzippt werden.
 
 ### Systemvoraussetzungen
 Systemvoraussetzungen: https://github.com/claeis/ilivalidator/blob/master/docs/ilivalidator.rst#laufzeitanforderungen
 
 ### Anfoderungen an XTF-Datei
-siehe auch Abschnitt (#Offene-Punkte-/-Abgrenzung-der-aktuellen-Umsetzung)
+siehe auch Abschnitt [Offene Punkte](#offene-punkte--abgrenzung-der-aktuellen-umsetzung)
 * Kompatibel mit den aktuellen Modellen sein (gemäss ilimodels\official_DMAV_models)
 * Webdienstdaten müssen im Lieferumfang enthalten sein
 * Für die Modellübergreifenden Tests müssen alle Topics aus dem Modell DMAVTYM_Alles_V1_0 im Lieferumfang enthalten sein
@@ -36,7 +36,7 @@ java -jar [ilivalidatorDir]\ilivalidator-x.xx.x.jar --config [configDir]\DMAV_V1
 Vollständige Dokumentation ilivalidator: https://github.com/claeis/ilivalidator/blob/master/docs/ilivalidator.rst#ilivalidator-anleitung 
 
 ## Meldungen von Bugs und Featurewünschen
-Bugs und Featurewünsche zur Validierung von DMAV mit ilivalidator können in der Rubrik **Issues** erfasst werden. Die gemeldeten Issues werden ggf. während der Bearbeitung in andere Repositories umverteilt (siehe Quellen).
+Bugs und Featurewünsche zur Validierung von DMAV mit ilivalidator können in der Rubrik **Issues** erfasst werden. Die gemeldeten Issues werden ggf. während der Bearbeitung in andere Repositories umverteilt (siehe [Quellen](#quellen)).
 
 ## Offene Punkte / Abgrenzung der aktuellen Umsetzung
 Aktuell werden folgende Arten von nicht-nativen Constraints und Anforderungen an die DMAV-Validierung noch nicht unterstützt:
