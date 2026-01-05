@@ -1,5 +1,5 @@
 # Validation DMAV avec ilivalidator
-Mise en œuvre des règles de validation officielles relatives au modèle de données de la mensuration officielle (DMAV) avec ilivalidator. Ilivalidator permet de vérifier les deux types de contraintes suivants:
+Mise en œuvre des règles de validation officielles relatives au modèle de données de la mensuration officielle (DMAV) avec ilivalidator. Dans ce projet, les deux types de contraintes suivants sont vérifiés pour les modèles DMAV avec ilivalidator :
 * Contraintes INTERLIS natives : contraintes formulées directement dans les modèles
 * Contraintes INTERLIS non natives : des contraintes supplémentaires sont formulées dans des modèles de validation supplémentaires. Il existent les modèles supplémentaires suivants :
   * DMAV_V1_0_Bodenbedeckung_Validierung
@@ -16,6 +16,13 @@ Les deux types de contraintes ont été testés dans le cadre du projet https://
 
 ## Utilisation via ilicop
 La dernière version est disponible sur https://dmav.ilicop.ch/ et peut être utilisée via l'interface d'ilicop.
+Pour valider les règles de contrôle supplémentaires, il faut sélectionner le profil 'DMAV mit Zusatzanforderungen':
+<br/>
+<br/>
+<img width="1645" height="485" alt="image" src="https://github.com/user-attachments/assets/65a69894-c322-41eb-908f-ea321bb562b5" />
+<br/>
+> [!TIP]
+> Actuellement, la limite de taille pour les fichiers XTF est de 200 MB. Les fichiers XTF plus grands peuvent être compressés avant le téléchargement afin de réduire leur taille. Ilicop accepte les fichiers XTF et ZIP pour le téléchargement.
 
 ## Installation
 Les derniers objets livrés se trouvent sous [Releases](https://github.com/geowerkstatt/DMAV_ilivalidator/releases). Ceux-ci peuvent être utilisés pour une installation locale. Pour cela, les fichiers doivent être téléchargés et décompressés dans un répertoire avec des permissions en lecture et en écriture.
