@@ -1,5 +1,5 @@
 # DMAV Validierung mit ilivalidator
-Umsetzung der offiziellen Prüfregeln zum Datenmodell der Amtlichen Vermessung (DMAV) mit ilivalidator. Mit ilivalidator werden folgende zwei Arten von Constraints geprüft:
+Umsetzung der offiziellen Prüfregeln zum Datenmodell der Amtlichen Vermessung (DMAV) mit ilivalidator. In diesem Projekt werden folgende zwei Arten von Constraints für DMAV-Modelle mit ilivalidator geprüft:
 * native INTERLIS-Constraints: direkt in den Modellen formulierte Constraints
 * nicht-native INTERLIS-Constraints: in zusätzlichen Validierungsmodellen werden weitere Constraints formuliert. Es bestehen folgende zusätzlichen Modelle:
   * DMAV_V1_0_Bodenbedeckung_Validierung
