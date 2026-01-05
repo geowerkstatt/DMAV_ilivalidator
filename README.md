@@ -16,6 +16,13 @@ Beide Arten von Constraints wurden im Rahmen des Projekts https://github.com/geo
 
 ## Verwendung via ilicop
 Der aktuellste 'Release' befindet sich jeweils auf https://dmav.ilicop.ch/ und kann über die Oberfläche von ilicop verwendet werden.
+Für die Validierung der zusätzlichen Prüfregelen, muss das Profil 'DMAV mit Zusatzanforderungen' ausgewählt werden:
+<br/>
+<br/>
+<img width="1645" height="485" alt="image" src="https://github.com/user-attachments/assets/65a69894-c322-41eb-908f-ea321bb562b5" />
+<br/>
+> [!TIP]
+> Aktuell besteht eine Grössenlimitierung für XTF-Dateien bei 200 MB. Diese kann umgangen werden, in dem die XTF-Dateien vor dem Upload gezippt werden. Ilicop akzeptiert XTF- und ZIP-Dateien für den Upload.
 
 ## Installation
 Unter [Releases](https://github.com/geowerkstatt/DMAV_ilivalidator/releases) befinden sich die aktuellsten Lieferobjekte. Diese können für eine lokale Installation verwendet werden. Dazu müssen die Dateien heruntergeladen und in einem Verzeichnis mit Lese- und Schreibrechten entzippt werden.
