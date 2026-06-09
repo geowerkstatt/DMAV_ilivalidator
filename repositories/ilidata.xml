@@ -156,7 +156,6 @@
             <file>
               <DatasetIdx16.File>
                 <path>dmav_V1_1/refdata/hoheitsgrenze-landesvermessung_2056.xtf</path>
-                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
@@ -196,7 +195,6 @@
             <file>
               <DatasetIdx16.File>
                 <path>dmav_V1_1/refdata/Gemeinden95_2_4.xtf</path>
-                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
@@ -236,7 +234,6 @@
             <file>
               <DatasetIdx16.File>
                 <path>dmav_V1_1/refdata/FixpunkteLV_V1_0_LFP1.xtf</path>
-                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
@@ -276,7 +273,6 @@
             <file>
               <DatasetIdx16.File>
                 <path>dmav_V1_1/refdata/FixpunkteLV_V1_0_HFP1.xtf</path>
-                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
@@ -316,7 +312,6 @@
             <file>
               <DatasetIdx16.File>
                 <path>dmav_V1_1/refdata/OfficialIndexOfLocalities_V1_0.xtf</path>
-                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
@@ -356,13 +351,51 @@
             <file>
               <DatasetIdx16.File>
                 <path>dmav_V1_1/refdata/fpds2_BE.xtf</path>
-                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
         </files>
       </DatasetIdx16.DataIndex.DatasetMetadata>
-      <DatasetIdx16.DataIndex.DatasetMetadata TID="97">
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="97">
+        <id>dmav_LFP3_449</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Datensatz LFP3 449</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <shortDescription>
+          <DatasetIdx16.MultilingualMText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedMText>
+                <Language>de</Language>
+                <Text>Datensatz LFP3 449</Text>
+              </DatasetIdx16.LocalisedMText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualMText>
+        </shortDescription>
+        <categories>
+          <DatasetIdx16.Code_>
+            <value>http://codes.interlis.ch/type/referenceData</value>
+          </DatasetIdx16.Code_>
+        </categories>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>dmav_V1_1/refdata/449_FixpunkteKategorie3.xtf</path>
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+      <DatasetIdx16.DataIndex.DatasetMetadata TID="99">
         <id>dmav_refdata_mapping</id>
         <version>2026-06-09</version>
         <owner>mailto:info@geow.ch</owner>
