@@ -127,15 +127,15 @@
           </DatasetIdx16.DataFile>
         </files>
       </DatasetIdx16.DataIndex.DatasetMetadata>
-<!--     <DatasetIdx16.DataIndex.DatasetMetadata TID="99">
-        <id>gwp-be_organisationen</id>
-        <version>2025-12-11</version>
-        <owner>mailto:reseau.awa@be.ch</owner>
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="91">
+        <id>dmav_v1_10_hoheitsgrenzen_lv</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
         <title>
           <DatasetIdx16.MultilingualText>
             <LocalisedText>
               <DatasetIdx16.LocalisedText>
-                <Text>Datensatz der Organisationen zum Datenmodell 13-BE</Text>
+                <Text>Datensatz HoheitsgrenzenLV_V1_0</Text>
               </DatasetIdx16.LocalisedText>
             </LocalisedText>
           </DatasetIdx16.MultilingualText>
@@ -145,7 +145,42 @@
             <LocalisedText>
               <DatasetIdx16.LocalisedMText>
                 <Language>de</Language>
-                <Text>Mit rund 340 öffentlichen Wasserversorgungen ist die Versorgung sehr kleinräumig strukturiert. Die planerische Herausforderung besteht darin, Wasserversorgungen zu restrukturieren, Anlagen auf einem hohen technischen Stand zu halten und die öffentliche Wasserversorgung langfristig qualitativ und quantitativ zu gewährleisten. Das Amt für Wasser und Abfall (AWA) führt gemeinsam mit den betroffenen Wasserversorgungen die Planungsarbeiten auf regionaler Ebene durch. Mit der geplanten Einführung der Informationsplattform Wasser (IPW) werden die digitalen Datenlieferungen gemäss GWP-Datenmodell 13-BE standardisiert.</Text>
+                <Text>Datensatz HoheitsgrenzenLV_V1_0</Text>
+              </DatasetIdx16.LocalisedMText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualMText>
+        </shortDescription>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>dmav_V1_1/refdata/hoheitsgrenze-landesvermessung_2056.xtf</path>
+                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="92">
+        <id>dmav_Gemeinden95_V1_0</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Datensatz Gemeinden95_V1_0</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <shortDescription>
+          <DatasetIdx16.MultilingualMText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedMText>
+                <Language>de</Language>
+                <Text>Datensatz Gemeinden95_V1_0</Text>
               </DatasetIdx16.LocalisedMText>
             </LocalisedText>
           </DatasetIdx16.MultilingualMText>
@@ -157,28 +192,205 @@
         </categories>
         <files>
           <DatasetIdx16.DataFile>
-            <fileFormat>application/interlis+xml;version=2.3</fileFormat>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
             <file>
               <DatasetIdx16.File>
-                <path>./gwp/gwp-be_organisationen.xml</path>
-                md5>c11c7e5098ce6aca65b60a0f53041e22</md5
+                <path>dmav_V1_1/refdata/Gemeinden95_2_4.xtf</path>
+                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
           </DatasetIdx16.DataFile>
         </files>
-        <baskets>
-          <DatasetIdx16.DataIndex.BasketMetadata>
-            <version>1</version>
-            <model>
-              <DatasetIdx16.ModelLink>
-                <name>IPW_GWP_Basis.GWP_Administration</name>
-              </DatasetIdx16.ModelLink>
-            </model>
-            <owner>mailto:reseau.awa@be.ch</owner>
-            <localId>ch23sag5orgbaskt</localId>
-          </DatasetIdx16.DataIndex.BasketMetadata>
-        </baskets>
-      </DatasetIdx16.DataIndex.DatasetMetadata>-->
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="93">
+        <id>dmav_LFP1_V1_0</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Datensatz LFP1_V1_0</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <shortDescription>
+          <DatasetIdx16.MultilingualMText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedMText>
+                <Language>de</Language>
+                <Text>Datensatz LFP1_V1_0</Text>
+              </DatasetIdx16.LocalisedMText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualMText>
+        </shortDescription>
+        <categories>
+          <DatasetIdx16.Code_>
+            <value>http://codes.interlis.ch/type/referenceData</value>
+          </DatasetIdx16.Code_>
+        </categories>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>C:/Data/03_GIT_Repos/DMAV_ilivalidator/DMAV_ilivalidator/data/dmav_V1_1/refdata/FixpunkteLV_V1_0_LFP1.xtf</path>
+                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="94">
+        <id>dmav_HFP1_V1_0</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Datensatz HFP1_V1_0</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <shortDescription>
+          <DatasetIdx16.MultilingualMText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedMText>
+                <Language>de</Language>
+                <Text>Datensatz HFP1_V1_0</Text>
+              </DatasetIdx16.LocalisedMText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualMText>
+        </shortDescription>
+        <categories>
+          <DatasetIdx16.Code_>
+            <value>http://codes.interlis.ch/type/referenceData</value>
+          </DatasetIdx16.Code_>
+        </categories>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>dmav_V1_1/refdata/FixpunkteLV_V1_0_HFP1.xtf</path>
+                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="95">
+        <id>dmav_OfficialIndesOfLocalities</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Datensatz OfficialIndesOfLocalities V1.0</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <shortDescription>
+          <DatasetIdx16.MultilingualMText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedMText>
+                <Language>de</Language>
+                <Text>Datensatz OfficialIndesOfLocalities</Text>
+              </DatasetIdx16.LocalisedMText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualMText>
+        </shortDescription>
+        <categories>
+          <DatasetIdx16.Code_>
+            <value>http://codes.interlis.ch/type/referenceData</value>
+          </DatasetIdx16.Code_>
+        </categories>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>dmav_V1_1/refdata/OfficialIndexOfLocalities_V1_0.xtf</path>
+                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+     <DatasetIdx16.DataIndex.DatasetMetadata TID="96">
+        <id>dmav_LFP2_BE</id>
+        <version>2026-06-08</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Datensatz FPDS2 BE</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <shortDescription>
+          <DatasetIdx16.MultilingualMText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedMText>
+                <Language>de</Language>
+                <Text>Datensatz FPDS2 BE</Text>
+              </DatasetIdx16.LocalisedMText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualMText>
+        </shortDescription>
+        <categories>
+          <DatasetIdx16.Code_>
+            <value>http://codes.interlis.ch/type/referenceData</value>
+          </DatasetIdx16.Code_>
+        </categories>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>C:/Data/03_GIT_Repos/DMAV_ilivalidator/DMAV_ilivalidator/data/dmav_V1_1/refdata/fpds2_BE.xtf</path>
+                <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
+      <DatasetIdx16.DataIndex.DatasetMetadata TID="97">
+        <id>dmav_refdata_mapping</id>
+        <version>2026-06-09</version>
+        <owner>mailto:info@geow.ch</owner>
+        <title>
+          <DatasetIdx16.MultilingualText>
+            <LocalisedText>
+              <DatasetIdx16.LocalisedText>
+                <Text>Refdata Mapping</Text>
+              </DatasetIdx16.LocalisedText>
+            </LocalisedText>
+          </DatasetIdx16.MultilingualText>
+        </title>
+        <categories>
+          <DatasetIdx16.Code_>
+            <value>http://codes.interlis.ch/type/refDataMapping</value>
+          </DatasetIdx16.Code_>
+        </categories>
+        <files>
+          <DatasetIdx16.DataFile>
+            <fileFormat>application/interlis+xml;version=2.4</fileFormat>
+            <file>
+              <DatasetIdx16.File>
+                <path>refdata_mapping.xtf</path>
+              </DatasetIdx16.File>
+            </file>
+          </DatasetIdx16.DataFile>
+        </files>
+      </DatasetIdx16.DataIndex.DatasetMetadata>
     </DatasetIdx16.DataIndex>
   </DATASECTION>
 </TRANSFER>

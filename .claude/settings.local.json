@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:models.geo.admin.ch)",
+      "WebSearch",
+      "WebFetch(domain:www.cadastre-manual.admin.ch)",
+      "Bash(cd /tmp)",
+      "Bash(cp \"C:/Users/ctheiler/.claude/skills/ilitools/ilitools.skill\" ilitools.zip)",
+      "Bash(unzip -p ilitools.zip home/claude/ilitools/SKILL.md)",
+      "Bash(unzip ilitools.zip -d ilitools_extracted)"
+    ]
+  }
+}

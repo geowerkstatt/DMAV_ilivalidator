@@ -24,7 +24,7 @@ IMPORTS FixpunkteLV_V1_0;
 IMPORTS Gemeinden95_V1_0;
 
     VIEW TOPIC HoheitsgrenzenAV_Validierung = 
-    DEPENDS ON DMAV_HoheitsgrenzenAV_V1_0.HoheitsgrenzenAV;
+    DEPENDS ON DMAV_HoheitsgrenzenAV_V1_0.HoheitsgrenzenAV,Gemeinden95_V1_0.Gemeinden;
 
         VIEW v_Gemeinde
             PROJECTION OF DMAV_HoheitsgrenzenAV_V1_0.HoheitsgrenzenAV.Gemeinde;
