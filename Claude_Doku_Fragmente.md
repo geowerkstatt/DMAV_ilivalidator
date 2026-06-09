@@ -75,6 +75,84 @@ MetaConfig (refmapping=ilidata:dmav_refdata_mapping)
 
 ---
 
+## Warum es ohne `topic` funktioniert — und welches Format korrekt ist
+
+### Die drei Lookups in `RefMapping.mergeRefData()`
+
+Beim Auswerten von `allObjects(>Gemeinden95_V1_0.Gemeinden.Gemeinde)` ruft der Validator intern `getRefData(topic, scopes)` auf. Für jeden Scope macht `mergeRefData()` immer **drei Lookups** im internen Pool:
+
+```
+1. MappingKey(scope_from_query,  topic_from_query)   // exakter Match
+2. MappingKey(scope_from_query,  null)               // kein Topic-Filter
+3. MappingKey(null,              topic_from_query)   // kein Scope-Filter
+```
+
+Die `MappingKey.equals()`-Methode verwendet **Standard-Gleichheit** — `null` ist kein Wildcard, sondern muss explizit `null == null` sein.
+
+### Ohne `topic` (topic weggelassen)
+
+Der Eintrag wird als `MappingKey(null, null)` gespeichert.  
+Weil der Basket keinen Scope hat, fragt der Validator mit `scope = null` ab.  
+→ Lookup #2 ergibt `MappingKey(null, null)` → **Match** ✓
+
+### Mit `topic="Gemeinden95_V1_0.Gemeinden"` (Punkt)
+
+Gespeichert als `MappingKey(null, "Gemeinden95_V1_0.Gemeinden")`.  
+Der Validator verwendet intern das **Doppelpunkt-Format** `"Gemeinden95_V1_0:Gemeinden"` (INTERLIS-Konvention für qualifizierte Namen).  
+→ Lookup #3 fragt `MappingKey(null, "Gemeinden95_V1_0:Gemeinden")` ab  
+→ `"Gemeinden95_V1_0:Gemeinden"` ≠ `"Gemeinden95_V1_0.Gemeinden"` → **kein Match** ✗
+
+### Mit `topic="Gemeinden95_V1_0:Gemeinden"` (Doppelpunkt)
+
+Gespeichert als `MappingKey(null, "Gemeinden95_V1_0:Gemeinden")`.  
+→ Lookup #3 fragt `MappingKey(null, "Gemeinden95_V1_0:Gemeinden")` ab → **Match** ✓
+
+### Empfehlung
+
+| `topic`-Wert | Verhalten |
+|---|---|
+| *(weggelassen)* | Catch-all: Refdata gilt für alle Topics und alle Baskets |
+| `Gemeinden95_V1_0:Gemeinden` (Doppelpunkt) | Korrekt: wird vom Validator-internen Format gefunden |
+| `Gemeinden95_V1_0.Gemeinden` (Punkt) | **Falsch**: kein Match, Validator verwendet Doppelpunkt intern |
+
+Für den DMAV-Fall (eine Gemeindeliste gilt für alle Baskets) ist **topic weglassen** die einfachste und korrekte Lösung. Für feingranulare Konfigurationen (verschiedene Refdata pro Topic) muss das Doppelpunkt-Format verwendet werden.
+
+---
+
+## `http://codes.interlis.ch/type/` — Werden diese Codes vom Validator geprüft?
+
+**Kurz: Nein.** Die Type-Codes in `<categories>` der `ilidata.xml` werden beim Lookup **nicht gefiltert**.
+
+### Was im ilivalidator-Sourcecode steht
+
+Der gesamte ilivalidator-Source (GitHub `claeis/ilivalidator`) enthält nur **einen einzigen** hardcodierten Type-String:
+
+```java
+// CreateIliDataTool.java — nur beim *Erzeugen* von ilidata.xml:
+private static final String CODES_TYPE_REFERENCE_DATA = "http://codes.interlis.ch/type/referenceData";
+```
+
+Das wird nur beim `--createIliData`-Tool verwendet, nicht beim Validieren.
+
+### Wie der Lookup wirklich funktioniert
+
+Wenn der Validator `ilidata:dmav_refdata_mapping` auflöst, macht `IliManager.getLocalCopyOfReposFile()` einen **einfachen BID-Lookup** — er sucht `<id>dmav_refdata_mapping</id>` in der `ilidata.xml`. Die `<categories>` mit dem Type-Code werden dabei ignoriert.
+
+### Übersicht der konventionellen Typen
+
+| Type-Code | Kennzeichnet | Verwendet vom Validator wenn |
+|-----------|-------------|------------------------------|
+| `http://codes.interlis.ch/type/metaconfig` | MetaConfig-INI-Datei | `--metaConfig ilidata:BID` oder `baseConfig=ilidata:BID` |
+| `http://codes.interlis.ch/type/ilivalidatorconfig` | Validierungskonfig-INI | `--config ilidata:BID` oder `config=ilidata:BID` |
+| `http://codes.interlis.ch/type/referenceData` | Referenzdaten-XTF | `--refdata ilidata:BID` oder `ch.interlis.referenceData=ilidata:BID` |
+| `http://codes.interlis.ch/type/refDataMapping` | IliVRefData_V1_0-Mapping | `--refmapping ilidata:BID` oder `refmapping=ilidata:BID` |
+
+### Fazit
+
+Die Typen sind **reine Konvention** für Repository-Maintainer und Tools wie `ilimanager`. Der Validator findet einen Datensatz unabhängig vom gesetzten Type-Code — solange die `<id>` stimmt. Korrekte Type-Codes zu setzen ist trotzdem empfehlenswert für Lesbarkeit und Tool-Kompatibilität.
+
+---
+
 ## Wie der Validator `refdata_mapping.xtf` findet
 
 Das läuft über dieselbe ilidata-Lookup-Kette wie alle anderen Konfigurationseinträge.

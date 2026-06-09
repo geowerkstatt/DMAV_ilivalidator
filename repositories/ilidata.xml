@@ -235,7 +235,7 @@
             <fileFormat>application/interlis+xml;version=2.4</fileFormat>
             <file>
               <DatasetIdx16.File>
-                <path>C:/Data/03_GIT_Repos/DMAV_ilivalidator/DMAV_ilivalidator/data/dmav_V1_1/refdata/FixpunkteLV_V1_0_LFP1.xtf</path>
+                <path>dmav_V1_1/refdata/FixpunkteLV_V1_0_LFP1.xtf</path>
                 <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
@@ -355,7 +355,7 @@
             <fileFormat>application/interlis+xml;version=2.4</fileFormat>
             <file>
               <DatasetIdx16.File>
-                <path>C:/Data/03_GIT_Repos/DMAV_ilivalidator/DMAV_ilivalidator/data/dmav_V1_1/refdata/fpds2_BE.xtf</path>
+                <path>dmav_V1_1/refdata/fpds2_BE.xtf</path>
                 <!-- <md5>c11c7e5098ce6aca65b60a0f53041e22</md5> -->
               </DatasetIdx16.File>
             </file>
