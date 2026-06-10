@@ -9,6 +9,8 @@ IMPORTS UNQUALIFIED Text_V2;
 IMPORTS UNQUALIFIED Math_V2_1;
 IMPORTS UNQUALIFIED ObjectPool_V1_0;
 IMPORTS UNQUALIFIED Elements_V1_0;
+IMPORTS UNQUALIFIED IliValidGwr_V1_0;
+IMPORTS UNQUALIFIED IliVRuntime_V1_0;
 IMPORTS DMAVTYM_Topologie_V1_0;
 IMPORTS DMAV_FixpunkteAVKategorie3_V1_1;
 IMPORTS DMAV_Bodenbedeckung_V1_1;
@@ -74,10 +76,7 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_fr="(GWRC02a) L'EGID n'existe pas dans le RegBL";
             !!@ message_it="(GWRC02a) L'EGID non esiste nel REA";
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRC02a WHERE DEFINED(EGID):
-                 DMAV_GWR("C02");
-            */
+            MANDATORY CONSTRAINT GWRC02a : DEFINED(EGID) => IliValidGwr_V1_0.egidExistsInGWR(EGID,PARAMETER IliVRuntime_V1_0.Scope);
 
         END v_Bodenbedeckung;
 
