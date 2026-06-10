@@ -12,7 +12,16 @@
       "Bash(curl -s \"https://raw.githubusercontent.com/claeis/ili2c/master/src/main/java/ch/interlis/ili2c/ListData.java\")",
       "Bash(jar xf *)",
       "Bash(javap -p -c org/interlis2/validator/refmapping/RefMapping.class)",
-      "Bash(javap -p -c 'org/interlis2/validator/refmapping/RefMapping$MappingKey.class')"
+      "Bash(javap -p -c 'org/interlis2/validator/refmapping/RefMapping$MappingKey.class')",
+      "Bash(Get-ChildItem -Path \"c:\\\\Data\\\\03_GIT_Repos\\\\DMAV_ilivalidator\\\\DMAV_ilivalidator\" -Recurse -Directory -Name)",
+      "Bash(Select-Object -First 30)",
+      "Bash(Get-ChildItem -Path ilitools -Recurse -Filter \"ilivalidator*.jar\")",
+      "Bash(Select-Object FullName, Length)",
+      "Bash(grep \"\\\\.class$\")",
+      "Bash(javap -p -c org/interlis2/validator/Validator.class)",
+      "Bash(javap -p -c org/interlis2/validator/Main.class)",
+      "Bash(javap -verbose org/interlis2/validator/Validator.class)",
+      "Bash(awk '/String #292.*ch.ehi.ilivalidator/{found=1} found{print; count++} count>500{exit}')"
     ]
   }
 }
