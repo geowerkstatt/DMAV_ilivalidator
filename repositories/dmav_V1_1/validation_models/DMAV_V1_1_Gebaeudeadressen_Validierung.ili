@@ -133,11 +133,7 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRB02) La designazione della via presente nel REA non si trova nella MU";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRB02: (
-                DMAV_GWR("B02")
-            );
-            */
+            !!MANDATORY CONSTRAINT GWRB02: IliValidGwr_V1_0.strassenbezeichnungExistsInGWR(strname,MunicipalityId);
 
             !!@ name = GWRB03
             !!@ message="(GWRB03) Lokalisation fehlt in der AV";
