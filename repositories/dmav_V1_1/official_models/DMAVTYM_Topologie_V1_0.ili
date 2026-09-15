@@ -117,4 +117,18 @@ TYPE MODEL DMAVTYM_Topologie_V1_0 (de)
     SurfaceObjects: ANYSTRUCTURE;
     SurfaceAttr: ATTRIBUTE OF @ SurfaceObjects): BOOLEAN;
 
+  /**
+   * Filter Objects based on whether they contain a point from another PointObject.
+   * PointObject: object containing the point geometry that is used for filtering.
+   * PointAttr: the point attribute of the PointObject.
+   * Objects: the objects that are filtered.
+   * SurfaceAttr: the surface attribute of the Objects.
+   * Since 2026-02-25
+   */
+  FUNCTION geometricFilter (
+    PointObject: ANYSTRUCTURE;
+    PointAttr: ATTRIBUTE OF @ PointObject;
+    Objects: BAG OF ANYSTRUCTURE;
+    SurfaceAttr: ATTRIBUTE OF @ Objects): BAG OF ANYSTRUCTURE;
+
 END DMAVTYM_Topologie_V1_0.

@@ -9,6 +9,8 @@ IMPORTS UNQUALIFIED Text_V2;
 IMPORTS UNQUALIFIED Math_V2_1;
 IMPORTS UNQUALIFIED ObjectPool_V1_0;
 IMPORTS UNQUALIFIED Elements_V1_0;
+IMPORTS UNQUALIFIED IliValidGwr_V1_0;
+IMPORTS UNQUALIFIED IliVRuntime_V1_0;
 IMPORTS DMAVTYM_Topologie_V1_0;
 IMPORTS DMAV_FixpunkteAVKategorie3_V1_1;
 IMPORTS DMAV_Bodenbedeckung_V1_1;
@@ -21,14 +23,18 @@ IMPORTS DMAV_Toleranzstufen_V1_1;
 IMPORTS DMAV_Gebaeudeadressen_V1_1;
 IMPORTS KGKCGC_FPDS2_V1_1;
 IMPORTS FixpunkteLV_V1_0;
+IMPORTS OfficialIndexOfLocalities_V1_0;
 
-    VIEW TOPIC Gebaeudeadressen_Validierung = 
-    DEPENDS ON DMAV_Gebaeudeadressen_V1_1.Gebaeudeadressen;
+    VIEW TOPIC Gebaeudeadressen_Validierung =
+    DEPENDS ON DMAV_Gebaeudeadressen_V1_1.Gebaeudeadressen, OfficialIndexOfLocalities_V1_0.OfficialIndexOfLocalities;
   
-        VIEW v_Gebaeudeeingang
+       VIEW v_Gebaeudeeingang
             PROJECTION OF DMAV_Gebaeudeadressen_V1_1.Gebaeudeadressen.Gebaeudeeingang;
         =
             ALL OF Gebaeudeeingang;
+            !! Geometrische Verknüpfung zu OfficialIndexOfLocalities_V1_0 erstellen
+            Zip: REFERENCE TO (EXTERNAL) OfficialIndexOfLocalities_V1_0.OfficialIndexOfLocalities.ZIP
+                    := DMAVTYM_Topologie_V1_0.geometricFilter(Gebaeudeeingang, >>Geometrie, allObjects(>OfficialIndexOfLocalities_V1_0.OfficialIndexOfLocalities.ZIP), >>OfficialIndexOfLocalities_V1_0.OfficialIndexOfLocalities.ZIP->Geometry);
 
             !!@ category = warning
             !!@ name = CH193851
@@ -119,11 +125,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRB01) La localizzazione presente nella MU non si trova nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
             MANDATORY CONSTRAINT GWRB01: (
-                DMAV_GWR("B01")
+                IliValidGwr_V1_0.strassenbezeichnungExistsInGWR(Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"),PARAMETER IliVRuntime_V1_0.Scope)
             );
-            */
 
             !!@ category = warning
             !!@ name = GWRB02
@@ -133,7 +137,10 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRB02) La designazione della via presente nel REA non si trova nella MU";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            !!MANDATORY CONSTRAINT GWRB02: IliValidGwr_V1_0.strassenbezeichnungExistsInGWR(strname,MunicipalityId);
+            MANDATORY CONSTRAINT GWRB02: (
+            NOT(Elements_V1_0.existsInListN(IliValidGwr_V1_0.gebaeudeStatusGWR(EGID),Elements_V1_0.valuesN("1007, 1008"))) =>
+                Elements_V1_0.existsInList(IliValidGwr_V1_0.eingangStrassenbezeichnungGWR(EGID,EDID),Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"))
+            );
 
             !!@ name = GWRB03
             !!@ message="(GWRB03) Lokalisation fehlt in der AV";
@@ -166,11 +173,8 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_fr="(GWRB05) L'EGID n'existe pas dans le RegBL";
             !!@ message_it="(GWRB05) L'indirizzo dell'edificio nella MU non è univoco";
             !! Umsetzung Phase 2;
-            /*
-            MANDATORY CONSTRAINT GWRB05: (
-                (Gebaeudestatus == #real) => DMAV_GWR("B05")
-            );
-            */
+            UNIQUE GWRB05: WHERE Gebaeudestatus == #real: Zip->ZIP4, Zip->Locality->LocalityName, Lokalisation->LokalisationNummer, Hausnummer;
+
 
             !!@ name = GWRC02
             !!@ message="(GWRC02) EGID existiert nicht im GWR";
@@ -179,11 +183,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC02) L'EGID non esiste nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
             MANDATORY CONSTRAINT GWRC02: (
-                DEFINED(EGID) => DMAV_GWR("C02")
+                DEFINED(EGID) => IliValidGwr_V1_0.egidExistsInGWR(EGID,PARAMETER IliVRuntime_V1_0.Scope)
             );
-            */
 
             !!@ name = GWRC03
             !!@ message="(GWRC03) Kombination EGID/EDID existiert nicht im GWR";
@@ -192,11 +194,10 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC03) La combinazione EGID/EDID non esiste nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
             MANDATORY CONSTRAINT GWRC03: (
-                (DEFINED(EGID) AND DEFINED(EDID)) => DMAV_GWR("C03")
+               (DEFINED(EGID) AND DEFINED(EDID)) => IliValidGwr_V1_0.edidExistsInGWR(EGID,EDID,PARAMETER IliVRuntime_V1_0.Scope)
             );
-            */
+
 
             !!@ category = warning
             !!@ name = GWRC04
@@ -206,11 +207,10 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC04) L'EGID (esistente) nel REA non è presente nella MU neppure sotto forma di progetto";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRC04: (
-                DMAV_GWR("C04")
-            );
-            */
+            SET CONSTRAINT GWRC04:
+                IliValidGwr_V1_0.egidSetCompareGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope)
+            ;
+
 
             !!@ category = warning
             !!@ name = GWRC05
@@ -220,11 +220,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC05) L'EGID (esistente) nel REA non è aggiornato nella MU";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRC05: (
-                DMAV_GWR("C05")
-            );
-            */
+            SET CONSTRAINT GWRC05: WHERE Gebaeudestatus==#projektiert OR Gebaeudestatus==#vergangen:
+                IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1004,1005"))
+            ;
 
             !!@ category = warning
             !!@ name = GWRC07
@@ -234,11 +232,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC07) L'EGID (progettato / autorizzato / in fase di realizzazione / non realizzato) nel REA è reale nella MU";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRC07: (
-                DMAV_GWR("C07")
-            );
-            */
+            SET CONSTRAINT GWRC07: WHERE Gebaeudestatus==#real:
+                IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1001,1002, 1003, 1008"))
+            ;
 
             !!@ name = GWRC08
             !!@ message="(GWRC08) Identische Gebäudeadresse mit unterschiedlicher EGID/EDID in AV und GWR";
@@ -247,11 +243,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC08) Indirizzi identici con differenti EGID/EDID nella MU e nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRC08: (
-                DMAV_GWR("C08")
-            );
-            */
+            MANDATORY CONSTRAINT GWRC08:
+                IliValidGwr_V1_0.expectEgidEdidGWR(EGID,EDID,Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"), Hausnummer, Zip->ZIP4, Zip->Locality->LocalityName,Elements_V1_0.valuesN("1004, 1005"))
+            ;
 
             !!@ name = GWRC09
             !!@ message="(GWRC09) Identischer EGID/EDID mit unterschiedlicher Gebäudeadresse in AV und GWR";
@@ -260,11 +254,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC09) EGID/EDID identici con differenti indirizzi dell'edificio nella MU e nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*
-            MANDATORY CONSTRAINT GWRC09: (
-                DMAV_GWR("C09")
-            );
-            */
+            MANDATORY CONSTRAINT GWRC09:
+                IliValidGwr_V1_0.expectAdresseGWR(Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"), Hausnummer, Zip->ZIP4, Zip->Locality->LocalityName,EGID,EDID,Elements_V1_0.valuesN("1007, 1008"))
+            ;
 
             !!@ name = GWRC10
             !!@ message="(GWRC10) EGID/EDID und Gebäudeadresse bis auf PLZ/Ortschaft in AV und GWR identisch";
@@ -273,7 +265,7 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC10) L'indirizzo dell'edificio e l'EGID/EDID sono identici nella MU e nel REA ma non i CAP/località";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-/*             MANDATORY CONSTRAINT GWRC10: (
+            /*  MANDATORY CONSTRAINT GWRC10: (
                 DMAV_GWR("C10")
             ); */
 
@@ -285,11 +277,9 @@ IMPORTS FixpunkteLV_V1_0;
             !!@ message_it="(GWRC13) L'edificio ha meno entrate nella MU che nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /*/
-            MANDATORY CONSTRAINT GWRC13: (
-                DMAV_GWR("C13")
-            );
-            */
+            MANDATORY CONSTRAINT GWRC13:
+                INTERLIS.elementCount(ObjectPool_V1_0.filter(ObjectPool_V1_0.allObjects(>DMAV_Gebaeudeadressen_V1_1.Gebaeudeadressen.Gebaeudeeingang), "EGID=={EGID}"))<IliValidGwr_V1_0.gebaeudeCountEdidGWR(EGID)
+            ;
 
             !!@ name = GWRA14
             !!@ message="(GWRA14) Eingang (EDID) ohne EGID in der Tabelle Gebaeudeeingang";

@@ -47,6 +47,25 @@ Error: line 257098: DMAV_Bodenbedeckung_V1_1.Bodenbedeckung.Bodenbedeckung: tid 
 Error: line 303989: DMAV_Bodenbedeckung_V1_1.Bodenbedeckung.Bodenbedeckung: tid ff9ea53b-f742-4ce8-8b14-0029e67edbb6: (GWRC02a) EGID existiert nicht im GWR
 ```
 
+## Informationen zu den GWR-Daten
+
+Quellen
+- [Merkmalskatalog GWR](https://www.housing-stat.ch/files/881-2200.pdf)
+- [GWR Check Dokumentation](https://www.housing-stat.ch/files/CheckGWR_Doku_de.pdf)
+
+Gebäudestatus (GSTAT)
+
+| Wert | Bezeichnung |
+|------|-------------|
+| 1001 | Gebäude projektiert |
+| 1002 | Gebäude bewilligt |
+| 1003 | Gebäude im Bau |
+| 1004 | Gebäude bestehend |
+| 1005 | Gebäude nicht nutzbar |
+| 1007 | Gebäude abgebrochen |
+| 1008 | Gebäude nicht realisiert |
+
+
 ## Weitere Hinweise
 
-Der Download der GWR-Datenbank ch.zip-data.sqlite erfolgt nach C:\Users\ogrimm\.ilicache\https&003a&002f&002fpublic.madd.bfs.admin.ch&002fch.zip
+Der Download der GWR-Datenbank ch.zip-data.sqlite erfolgt nach C:\Users\<myuser>\.ilicache\https&003a&002f&002fpublic.madd.bfs.admin.ch&002fch.zip
