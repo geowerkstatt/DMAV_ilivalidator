@@ -138,7 +138,7 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
             MANDATORY CONSTRAINT GWRB02: (
-            NOT(Elements_V1_0.existsInListN(IliValidGwr_V1_0.gebaeudeStatusGWR(EGID),Elements_V1_0.valuesN("1007, 1008"))) =>
+            NOT(Elements_V1_0.existsInListN(IliValidGwr_V1_0.gebaeudeStatusGWR(EGID),Elements_V1_0.valuesN("1007;1008"))) =>
                 Elements_V1_0.existsInList(IliValidGwr_V1_0.eingangStrassenbezeichnungGWR(EGID,EDID),Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"))
             );
 
@@ -221,7 +221,7 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
             SET CONSTRAINT GWRC05: WHERE Gebaeudestatus==#projektiert OR Gebaeudestatus==#vergangen:
-                IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1004,1005"))
+                IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1004;1005"))
             ;
 
             !!@ category = warning
@@ -233,7 +233,7 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
             SET CONSTRAINT GWRC07: WHERE Gebaeudestatus==#real:
-                IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1001,1002, 1003, 1008"))
+                IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1001;1002;1003;1008"))
             ;
 
             !!@ name = GWRC08
@@ -244,7 +244,7 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
             MANDATORY CONSTRAINT GWRC08:
-                IliValidGwr_V1_0.expectEgidEdidGWR(EGID,EDID,Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"), Hausnummer, Zip->ZIP4, Zip->Locality->LocalityName,Elements_V1_0.valuesN("1004, 1005"))
+                IliValidGwr_V1_0.expectEgidEdidGWR(EGID,EDID,Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"), Hausnummer, Zip->ZIP4, Zip->Locality->LocalityName,Elements_V1_0.valuesN("1004;1005"))
             ;
 
             !!@ name = GWRC09
@@ -255,7 +255,7 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
             MANDATORY CONSTRAINT GWRC09:
-                IliValidGwr_V1_0.expectAdresseGWR(Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"), Hausnummer, Zip->ZIP4, Zip->Locality->LocalityName,EGID,EDID,Elements_V1_0.valuesN("1007, 1008"))
+                IliValidGwr_V1_0.expectAdresseGWR(Elements_V1_0.valuesOfPath("Lokalisation->LokalisationName->Name"), Hausnummer, Zip->ZIP4, Zip->Locality->LocalityName,EGID,EDID,Elements_V1_0.valuesN("1007;1008"))
             ;
 
             !!@ name = GWRC10
