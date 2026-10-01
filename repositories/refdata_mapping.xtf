@@ -13,7 +13,7 @@
         <IliVRefData_V1_0:Mapping ili:bid="C9F02DF4-FF5A-4B7B-AC3E-FD9C07FB726E">
            <IliVRefData_V1_0:RefData ili:tid="449_1">
                 <IliVRefData_V1_0:ignore>false</IliVRefData_V1_0:ignore>
-                <IliVRefData_V1_0:topic>Gemeinden95_V1_0:Gemeinden</IliVRefData_V1_0:topic>
+            <!--     <IliVRefData_V1_0:topic>DMAV_HoheitsgrenzenAV_V1_0.HoheitsgrenzenAV</IliVRefData_V1_0:topic> -->
                 <IliVRefData_V1_0:scope>449</IliVRefData_V1_0:scope>
                 <IliVRefData_V1_0:refdata>ilidata:dmav_Gemeinden95_V1_0</IliVRefData_V1_0:refdata>
             </IliVRefData_V1_0:RefData>
