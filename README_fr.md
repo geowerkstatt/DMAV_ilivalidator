@@ -16,16 +16,6 @@ Les deux types de contraintes ont été testés dans le cadre du projet https://
 
 Les contrôles intermodèles avec les données des services web (points fixes PFP1/PFA1/PFP2, frontières nationales, liste des communes, répertoire officiel des localités) sont intégrés sous forme de données de référence. Les contrôles par rapport au RegBL (GWR) sont effectués au moyen du plugin `ilivalid-gwr`.
 
-## Utilisation via ilicop
-La dernière version est disponible sur https://dmav.ilicop.ch/ et peut être utilisée via l'interface d'ilicop.
-Pour valider les règles de contrôle supplémentaires, il faut sélectionner le profil 'DMAV mit Zusatzanforderungen':
-<br/>
-<br/>
-<img width="1645" height="485" alt="image" src="https://github.com/user-attachments/assets/65a69894-c322-41eb-908f-ea321bb562b5" />
-<br/>
-> [!TIP]
-> Actuellement, la limite de taille pour les fichiers XTF est de 200 MB. Les fichiers XTF plus grands peuvent être compressés avant le téléchargement afin de réduire leur taille. Ilicop accepte les fichiers XTF et ZIP pour le téléchargement.
-
 ## Structure du repository
 ```
 ilitools/                       ilivalidator (version snapshot interne) avec libs
@@ -44,6 +34,7 @@ repositories/                   repository local des modèles et des données (-
 data/dmav_V1_1/test_data/       jeux de données de test (logs sous logs/, non versionnés)
 notes/                          notes de travail et documentation (en allemand)
 ```
+Pour plus de détails sur la chaîne de configuration (MetaConfig, Config, ilidata, données de référence), voir [notes/Doku_ConfigRefData.md](notes/Doku_ConfigRefData.md) (en allemand).
 
 Deux profils sont disponibles :
 
@@ -55,7 +46,7 @@ Deux profils sont disponibles :
 ## Installation
 Les derniers objets livrés se trouvent sous [Releases](https://github.com/geowerkstatt/DMAV_ilivalidator/releases). Ceux-ci peuvent être utilisés pour une installation locale. Pour cela, les fichiers doivent être téléchargés et décompressés dans un répertoire avec des permissions en lecture et en écriture.
 
-Il est aussi possible de cloner le repository. En raison de sa taille, le répertoire officiel des localités (`OfficialIndexOfLocalities_V1_0.xtf`) n'est pas versionné et doit être téléchargé séparément dans `repositories/dmav_V1_1/refdata/` (sources voir [notes/Doku_ConfigRefData_Teamcamp.md](notes/Doku_ConfigRefData_Teamcamp.md#download-der-webdienstdaten)).
+Il est aussi possible de cloner le repository. En raison de sa taille, le répertoire officiel des localités (`OfficialIndexOfLocalities_V1_0.xtf`) n'est pas versionné et doit être téléchargé séparément dans `repositories/dmav_V1_1/refdata/` (sources voir [notes/Doku_ConfigRefData.md](notes/Doku_ConfigRefData.md#download-der-webdienstdaten)).
 
 ### Conditions système recommandées
 Conditions système recommandées: https://github.com/claeis/ilivalidator/blob/master/docs/ilivalidator.rst#laufzeitanforderungen

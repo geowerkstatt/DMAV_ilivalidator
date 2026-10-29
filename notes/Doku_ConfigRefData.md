@@ -88,7 +88,60 @@ Die Plain-Config (`DMAV_V1_1_Validierung_Config_plain.ini`) taucht in `ilidata.x
 
 ### `refdata_mapping.xtf`
 
-XTF-Datei im Format `IliVRefData_V1_0`. Definiert pro INTERLIS-Topic, welche Referenzdatei zu laden ist (z.B. Gemeindeliste, Fixpunkte-Referenz, Hoheitsgrenzen). Der Validator nutzt dieses Mapping, wenn Validierungsconstraints `allObjects(>Topic.Class)` aufrufen – er schaut im Mapping nach, woher die Referenzobjekte für das jeweilige Topic zu holen sind.
+XTF-Datei im Format `IliVRefData_V1_0`. Definiert, welche Referenzdateien (z.B. Gemeindeliste, Fixpunkte-Referenz, Hoheitsgrenzen) zu einem Basket der **zu prüfenden** Daten geladen werden. Die geladenen Referenzobjekte stehen danach in Constraints über `ObjectPool_V1_0.allObjects(>Modell.Topic.Klasse)` zur Verfügung.
+
+Jeder `RefData`-Eintrag hat folgende Attribute:
+
+| Attribut | Bedeutung |
+|----------|-----------|
+| `ignore` | `true` = Eintrag wird ignoriert |
+| `topic` | Qualifizierter Name des Topics der **zu prüfenden Daten** (z.B. `DMAV_HoheitsgrenzenAV_V1_0.HoheitsgrenzenAV`), **nicht** des Topics der Referenzdaten. Trennzeichen ist ein Punkt. Fehlt `topic`, gilt der Eintrag für alle Baskets mit dem gegebenen `scope`. |
+| `scope` | z.B. BFS-Nummer, Kantonskürzel oder NBIdent. Wird mit `--scope` verglichen. Fehlt `scope`, gilt der Eintrag für alle Baskets mit dem gegebenen `topic`. |
+| `refdata` | Eine oder mehrere URIs der Referenzdaten, z.B. `ilidata:dmav_Gemeinden95_V1_0` (Lookup in `ilidata.xml`) |
+| `comment` | Freitext |
+
+Mindestens `topic` oder `scope` muss gesetzt sein.
+
+**Beispiel (korrekt):** Gemeinden95 für alle Baskets der Gemeinde 449 laden:
+
+```xml
+<IliVRefData_V1_0:RefData ili:tid="449_1">
+    <IliVRefData_V1_0:ignore>false</IliVRefData_V1_0:ignore>
+    <IliVRefData_V1_0:scope>449</IliVRefData_V1_0:scope>
+    <IliVRefData_V1_0:refdata>ilidata:dmav_Gemeinden95_V1_0</IliVRefData_V1_0:refdata>
+</IliVRefData_V1_0:RefData>
+```
+
+Soll der Eintrag nur für den HoheitsgrenzenAV-Basket gelten, zusätzlich:
+`<IliVRefData_V1_0:topic>DMAV_HoheitsgrenzenAV_V1_0.HoheitsgrenzenAV</IliVRefData_V1_0:topic>`
+
+#### ⚠ Stolperfalle: `topic` mit dem Topic der Referenzdaten
+
+Mit `<topic>Gemeinden95_V1_0:Gemeinden</topic>` (Topic der Referenzdaten und `:` statt `.`) passt der Eintrag auf keinen Basket der zu prüfenden Daten. Die Referenzdaten werden dann **gar nicht geladen**, ohne dass eine Warnung kommt. Folge: `allObjects(...)` liefert eine leere Menge, und Constraints wie CH112352 (`objectCount(filter(allObjects(>Gemeinden95_V1_0.Gemeinden.Gemeinde), ...)) == 1`) schlagen bei **jedem** Objekt fehl (*Unbekannte oder falsche Gemeinde*).
+
+**Erkennen im Log:** Werden die Referenzdaten geladen, erscheint im ersten Validierungsdurchgang die Zeile
+
+```
+Info: search in repository <...> for BID <dmav_Gemeinden95_V1_0>
+```
+
+und mit `--trace` zusätzlich, wie viele Objekte gelesen wurden (z.B. `2139 objects in CLASS Gemeinden95_V1_0.Gemeinden.Gemeinde`). Fehlt die `search in repository`-Zeile für eine erwartete Refdata-ID, greift der Mapping-Eintrag nicht.
+
+#### Platzhalter in `ObjectPool_V1_0.filter`
+
+Im Filter-Ausdruck können Attribute des **gerade geprüften** Objekts mit `{Attributname}` eingesetzt werden. Attributnamen ohne Klammern beziehen sich auf die gefilterten (Referenz-)Objekte. Der Validator setzt Texte in Anführungszeichen, Aufzählungen mit `#` und Zahlen direkt ein. Undefinierte Werte werden zu `UNDEFINED`.
+
+```
+"BFSNr == {BFSNummer} AND Name == {Name}"
+```
+
+Mit `--trace` steht der aufgelöste Ausdruck im Log, z.B.:
+
+```
+Info: evaluateFilter(): Resolved filter expression: BFSNr == 449 AND Name == "Sauge"
+```
+
+So lässt sich prüfen, ob ein fehlschlagender Constraint am Filter oder an fehlenden Referenzdaten liegt.
 
 ---
 

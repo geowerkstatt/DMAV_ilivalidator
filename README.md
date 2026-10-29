@@ -16,16 +16,6 @@ Beide Arten von Constraints wurden im Rahmen des Projekts https://github.com/geo
 
 Modellübergreifende Prüfungen gegen Webdienstdaten (Fixpunkte LFP1/HFP1/LFP2, Hoheitsgrenzen LV, Gemeindeliste, amtliches Ortschaftenverzeichnis) werden über Referenzdaten eingebunden. Prüfungen gegen das GWR laufen über das Plugin `ilivalid-gwr`.
 
-## Verwendung via ilicop
-Der aktuellste 'Release' befindet sich jeweils auf https://dmav.ilicop.ch/ und kann über die Oberfläche von ilicop verwendet werden.
-Für die Validierung der zusätzlichen Prüfregelen, muss das Profil 'DMAV mit Zusatzanforderungen' ausgewählt werden:
-<br/>
-<br/>
-<img width="1645" height="485" alt="image" src="https://github.com/user-attachments/assets/65a69894-c322-41eb-908f-ea321bb562b5" />
-<br/>
-> [!TIP]
-> Aktuell besteht eine Grössenlimitierung für XTF-Dateien bei 200 MB. Grössere XTF-Dateien können vor dem Upload gezippt werden, um die Dateigrösse zu reduzieren. Ilicop akzeptiert XTF- und ZIP-Dateien für den Upload.
-
 ## Aufbau des Repositorys
 ```
 ilitools/                       ilivalidator (interne Snapshot-Version) inkl. libs
@@ -44,7 +34,7 @@ repositories/                   lokales Modell- und Daten-Repository (--modeldir
 data/dmav_V1_1/test_data/       Testdatensätze (Logs unter logs/, nicht versioniert)
 notes/                          Arbeitsnotizen und Dokumentation
 ```
-Details zur Konfigurationskette (MetaConfig, Config, ilidata, Referenzdaten) siehe [notes/Doku_ConfigRefData_Teamcamp.md](notes/Doku_ConfigRefData_Teamcamp.md).
+Details zur Konfigurationskette (MetaConfig, Config, ilidata, Referenzdaten) siehe [notes/Doku_ConfigRefData.md](notes/Doku_ConfigRefData.md).
 
 Es stehen zwei Profile zur Verfügung:
 
@@ -56,7 +46,7 @@ Es stehen zwei Profile zur Verfügung:
 ## Installation
 Unter [Releases](https://github.com/geowerkstatt/DMAV_ilivalidator/releases) befinden sich die aktuellsten Lieferobjekte. Diese können für eine lokale Installation verwendet werden. Dazu müssen die Dateien heruntergeladen und in einem Verzeichnis mit Lese- und Schreibrechten entzippt werden.
 
-Alternativ kann das Repository geklont werden. Das amtliche Ortschaftenverzeichnis (`OfficialIndexOfLocalities_V1_0.xtf`) ist aufgrund der Dateigrösse nicht versioniert und muss separat nach `repositories/dmav_V1_1/refdata/` heruntergeladen werden (Bezugsquellen siehe [notes/Doku_ConfigRefData_Teamcamp.md](notes/Doku_ConfigRefData_Teamcamp.md#download-der-webdienstdaten)).
+Alternativ kann das Repository geklont werden. Das amtliche Ortschaftenverzeichnis (`OfficialIndexOfLocalities_V1_0.xtf`) ist aufgrund der Dateigrösse nicht versioniert und muss separat nach `repositories/dmav_V1_1/refdata/` heruntergeladen werden (Bezugsquellen siehe [notes/Doku_ConfigRefData.md](notes/Doku_ConfigRefData.md#download-der-webdienstdaten)).
 
 ### Systemvoraussetzungen
 Systemvoraussetzungen: https://github.com/claeis/ilivalidator/blob/master/docs/ilivalidator.rst#laufzeitanforderungen

@@ -207,9 +207,9 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !!@ message_it="(GWRC04) L'EGID (esistente) nel REA non è presente nella MU neppure sotto forma di progetto";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /* SET CONSTRAINT GWRC04:
+            SET CONSTRAINT GWRC04:
                 IliValidGwr_V1_0.egidSetCompareGstatGWR(ALL,>>EGID,PARAMETER IliVRuntime_V1_0.Scope,Elements_V1_0.valuesN("1004;1005"))
-            ; */
+            ;
 
 
             !!@ category = warning
@@ -220,10 +220,10 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !!@ message_it="(GWRC05) L'EGID (esistente) nel REA non è aggiornato nella MU";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /* MANDATORY CONSTRAINT GWRC05: (
+            MANDATORY CONSTRAINT GWRC05: (
                 ((Gebaeudestatus==#projektiert OR Gebaeudestatus==#vergangen) AND DEFINED(EGID)) =>
                     NOT(Elements_V1_0.existsInListN(IliValidGwr_V1_0.gebaeudeStatusGWR(EGID),Elements_V1_0.valuesN("1004;1005")))
-            ); */
+            );
 
             !!@ category = warning
             !!@ name = GWRC07
@@ -233,10 +233,10 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !!@ message_it="(GWRC07) L'EGID (progettato / autorizzato / in fase di realizzazione / non realizzato) nel REA è reale nella MU";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /* MANDATORY CONSTRAINT GWRC07: (
+            MANDATORY CONSTRAINT GWRC07: (
                 (Gebaeudestatus==#real AND DEFINED(EGID)) =>
                     NOT(Elements_V1_0.existsInListN(IliValidGwr_V1_0.gebaeudeStatusGWR(EGID),Elements_V1_0.valuesN("1001;1002;1003;1008")))
-            ); */
+            );
 
             !!@ name = GWRC08
             !!@ message="(GWRC08) Identische Gebäudeadresse mit unterschiedlicher EGID/EDID in AV und GWR";
@@ -279,9 +279,9 @@ IMPORTS OfficialIndexOfLocalities_V1_0;
             !!@ message_it="(GWRC13) L'edificio ha meno entrate nella MU che nel REA";
             !! Kategorie: modellübergreifend
             !! Umsetzung Phase 3;
-            /* MANDATORY CONSTRAINT GWRC13:
+            MANDATORY CONSTRAINT GWRC13:
                 INTERLIS.elementCount(ObjectPool_V1_0.filter(ObjectPool_V1_0.allObjects(>DMAV_Gebaeudeadressen_V1_1.Gebaeudeadressen.Gebaeudeeingang), "EGID=={EGID}")) == IliValidGwr_V1_0.gebaeudeCountEdidGWR(EGID)
-            ; */
+            ;
 
             !!@ name = GWRA14
             !!@ message="(GWRA14) Eingang (EDID) ohne EGID in der Tabelle Gebaeudeeingang";
