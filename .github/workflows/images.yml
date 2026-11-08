@@ -1,0 +1,114 @@
+name: Publish images
+
+on:
+  push:
+    branches:
+      - publishImage
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version, for example 0.1.1. Only from main. Leave empty to tag the images with the branch name.
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io/geowerkstatt
+  # Change together with the checksums in "Check plugin checksums": a tag must not move to other jars.
+  GWR_PLUGIN_TAG: 1.0.0-20260217.141026-7
+  # Fixed epoch: a rebuild of the same files gives the same digest, so a fixed tag keeps its digest.
+  SOURCE_DATE_EPOCH: 0
+
+jobs:
+  publish:
+    name: Publish images to GHCR
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Determine image tags
+        id: tags
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          version_pattern='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
+          if [ "$EVENT_NAME" = release ]; then
+            version="${GITHUB_REF_NAME#v}"
+          elif [ -n "$INPUT_VERSION" ] && [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "::error::Start the workflow from main to publish a version."
+            exit 1
+          else
+            version="${INPUT_VERSION#v}"
+          fi
+
+          if [ -n "$version" ]; then
+            if ! [[ "$version" =~ $version_pattern ]]; then
+              echo "::error::Invalid version. Use the form 0.1.1 or v0.1.1."
+              exit 1
+            fi
+            {
+              echo "repository=$version"
+              echo "gwr-plugin=$GWR_PLUGIN_TAG"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          branch_tag="${GITHUB_REF_NAME//[^a-zA-Z0-9_.-]/-}"
+          branch_tag="${branch_tag:0:128}"
+          if [[ "$branch_tag" =~ $version_pattern ]]; then
+            echo "::error::The branch name looks like a version tag. Rename the branch."
+            exit 1
+          fi
+          for image in repository gwr-plugin; do
+            echo "$image=$branch_tag"
+          done >> "$GITHUB_OUTPUT"
+
+      - name: Check plugin checksums
+        run: |
+          sha256sum --check --strict <<'EOF'
+          b165cae1d0f6be6b642b8ae9da1bc19628a2998b7dd426b1c38e738ba6740d0f  iliplugins/ilivalid-gwr-1.0.0-SNAPSHOT.jar
+          50524b16b649fb03f81df6e61dec69911b8849e6943c61b85faa24e49bfd98fc  iliplugins/sqlite-jdbc-3.43.0.0.jar
+          EOF
+
+      - name: Log in to GHCR
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Publish dmav-repository
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          target: dmav-repository
+          tags: ${{ env.REGISTRY }}/dmav-repository:${{ steps.tags.outputs.repository }}
+          outputs: type=registry,rewrite-timestamp=true
+          provenance: false
+
+      - name: Publish dmav-gwr-plugin
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          target: dmav-gwr-plugin
+          tags: ${{ env.REGISTRY }}/dmav-gwr-plugin:${{ steps.tags.outputs.gwr-plugin }}
+          outputs: type=registry,rewrite-timestamp=true
+          provenance: false
