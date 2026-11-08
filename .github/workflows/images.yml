@@ -3,7 +3,7 @@ name: Publish images
 on:
   push:
     branches:
-      - publishImages
+      - publishImage
   release:
     types: [published]
   workflow_dispatch:
