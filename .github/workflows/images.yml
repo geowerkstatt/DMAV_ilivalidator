@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Tag for dmav-repository, for example 0.1.1
-        required: true
+        description: Release version, for example 0.1.1. Only from main. Leave empty to tag the images with the branch name.
+        required: false
         type: string
 
 permissions: {}
@@ -38,22 +38,44 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Determine repository version
-        id: version
+      - name: Determine image tags
+        id: tags
         env:
           EVENT_NAME: ${{ github.event_name }}
-          RAW_VERSION: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.version }}
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          if [ "$EVENT_NAME" = workflow_dispatch ] && [ "$GITHUB_REF" != refs/heads/main ]; then
-            echo "::error::Start the workflow from main."
+          version_pattern='^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
+          if [ "$EVENT_NAME" = release ]; then
+            version="${GITHUB_REF_NAME#v}"
+          elif [ -n "$INPUT_VERSION" ] && [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "::error::Start the workflow from main to publish a version."
+            exit 1
+          else
+            version="${INPUT_VERSION#v}"
+          fi
+
+          if [ -n "$version" ]; then
+            if ! [[ "$version" =~ $version_pattern ]]; then
+              echo "::error::Invalid version. Use the form 0.1.1 or v0.1.1."
+              exit 1
+            fi
+            {
+              echo "repository=$version"
+              echo "gwr-plugin=$GWR_PLUGIN_TAG"
+              echo "ilivalidator=$ILIVALIDATOR_TAG"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          branch_tag="${GITHUB_REF_NAME//[^a-zA-Z0-9_.-]/-}"
+          branch_tag="${branch_tag:0:128}"
+          if [[ "$branch_tag" =~ $version_pattern ]]; then
+            echo "::error::The branch name looks like a version tag. Rename the branch."
             exit 1
           fi
-          version="${RAW_VERSION#v}"
-          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
-            echo "::error::Invalid version. Use the form 0.1.1 or v0.1.1."
-            exit 1
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+          for image in repository gwr-plugin ilivalidator; do
+            echo "$image=$branch_tag"
+          done >> "$GITHUB_OUTPUT"
 
       - name: Check plugin checksums
         run: |
@@ -77,7 +99,7 @@ jobs:
         with:
           context: .
           target: dmav-repository
-          tags: ${{ env.REGISTRY }}/dmav-repository:${{ steps.version.outputs.version }}
+          tags: ${{ env.REGISTRY }}/dmav-repository:${{ steps.tags.outputs.repository }}
           outputs: type=registry,rewrite-timestamp=true
           provenance: false
 
@@ -86,7 +108,7 @@ jobs:
         with:
           context: .
           target: dmav-gwr-plugin
-          tags: ${{ env.REGISTRY }}/dmav-gwr-plugin:${{ env.GWR_PLUGIN_TAG }}
+          tags: ${{ env.REGISTRY }}/dmav-gwr-plugin:${{ steps.tags.outputs.gwr-plugin }}
           outputs: type=registry,rewrite-timestamp=true
           provenance: false
 
@@ -95,6 +117,6 @@ jobs:
         with:
           context: .
           target: dmav-ilivalidator
-          tags: ${{ env.REGISTRY }}/dmav-ilivalidator:${{ env.ILIVALIDATOR_TAG }}
+          tags: ${{ env.REGISTRY }}/dmav-ilivalidator:${{ steps.tags.outputs.ilivalidator }}
           outputs: type=registry,rewrite-timestamp=true
           provenance: false
