@@ -1,6 +1,9 @@
 name: Publish images
 
 on:
+  # Temporary: registers the workflow on GitHub. Remove before merge.
+  push:
+    branches: [publishImage]
   release:
     types: [published]
   workflow_dispatch:
