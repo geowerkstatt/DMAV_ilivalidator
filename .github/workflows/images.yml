@@ -23,7 +23,6 @@ env:
   REGISTRY: ghcr.io/geowerkstatt
   # Change together with the checksums in "Check plugin checksums": a tag must not move to other jars.
   GWR_PLUGIN_TAG: 1.0.0-20260217.141026-7
-  ILIVALIDATOR_TAG: 1.15.1-INTERNAL-GEOWERKSTATT-SNAPSHOT
   # Fixed epoch: a rebuild of the same files gives the same digest, so a fixed tag keeps its digest.
   SOURCE_DATE_EPOCH: 0
 
@@ -65,7 +64,6 @@ jobs:
             {
               echo "repository=$version"
               echo "gwr-plugin=$GWR_PLUGIN_TAG"
-              echo "ilivalidator=$ILIVALIDATOR_TAG"
             } >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -76,7 +74,7 @@ jobs:
             echo "::error::The branch name looks like a version tag. Rename the branch."
             exit 1
           fi
-          for image in repository gwr-plugin ilivalidator; do
+          for image in repository gwr-plugin; do
             echo "$image=$branch_tag"
           done >> "$GITHUB_OUTPUT"
 
@@ -112,14 +110,5 @@ jobs:
           context: .
           target: dmav-gwr-plugin
           tags: ${{ env.REGISTRY }}/dmav-gwr-plugin:${{ steps.tags.outputs.gwr-plugin }}
-          outputs: type=registry,rewrite-timestamp=true
-          provenance: false
-
-      - name: Publish dmav-ilivalidator
-        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
-        with:
-          context: .
-          target: dmav-ilivalidator
-          tags: ${{ env.REGISTRY }}/dmav-ilivalidator:${{ steps.tags.outputs.ilivalidator }}
           outputs: type=registry,rewrite-timestamp=true
           provenance: false
