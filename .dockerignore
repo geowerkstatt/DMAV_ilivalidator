@@ -1,0 +1,11 @@
+*
+!repositories
+!iliplugins/ilivalid-gwr-1.0.0-SNAPSHOT.jar
+!iliplugins/sqlite-jdbc-3.43.0.0.jar
+!ilitools/ilivalidator-1.15.1-INTERNAL-GEOWERKSTATT-SNAPSHOT.jar
+!ilitools/libs
+
+# Keep in step with .gitignore.
+**/OfficialIndexOfLocalities*
+**/logs
+**/hs_err_pid*.log
